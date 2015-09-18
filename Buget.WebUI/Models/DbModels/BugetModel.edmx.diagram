@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b83418187164042968356d1de4c2055" Name="Diagram1">
+        <EntityTypeShape EntityType="bugetModel.User" Width="1.5" PointX="5.875" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bugetModel.Creditor" Width="1.5" PointX="4.875" PointY="0.5" />
+        <EntityTypeShape EntityType="bugetModel.Dutie" Width="1.5" PointX="8.375" PointY="0.5" />
+        <AssociationConnector Association="bugetModel.dutie_creditor" />
+        <AssociationConnector Association="bugetModel.dutie_user" />
+        <EntityTypeShape EntityType="bugetModel.Role" Width="1.5" PointX="1.25" PointY="3.625" />
+        <AssociationConnector Association="bugetModel.user_role" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

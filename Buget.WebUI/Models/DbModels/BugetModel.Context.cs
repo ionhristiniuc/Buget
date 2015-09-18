@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Buget.WebUI.Models.Db
+namespace Buget.WebUI.Models.DbModels
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class bugetEntities : DbContext
+    public partial class BugetEntities : DbContext
     {
-        public bugetEntities()
-            : base("name=bugetEntities")
+        public BugetEntities()
+            : base("name=BugetEntities")
         {
         }
     
@@ -25,6 +25,9 @@ namespace Buget.WebUI.Models.Db
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<user> users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Creditor> Creditors { get; set; }
+        public DbSet<Dutie> Duties { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

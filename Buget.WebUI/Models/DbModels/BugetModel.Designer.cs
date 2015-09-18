@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Ion\C#\Projects Visual C#\Buget\Buget.WebUI\Models\Db\BugetModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Ion\C#\Projects Visual C#\Buget\Buget.WebUI\Models\DbModels\BugetModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

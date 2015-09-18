@@ -7,16 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Buget.WebUI.Models.Db
+namespace Buget.WebUI.Models.DbModels
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class Role
     {
+        public Role()
+        {
+            this.Users = new HashSet<User>();
+        }
+    
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<User> Users { get; set; }
     }
 }

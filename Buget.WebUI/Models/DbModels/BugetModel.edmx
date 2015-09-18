@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bugetModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="creditor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="dutie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Precision="0" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="CreditorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Login" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_role">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="dutie_creditor">
+          <End Role="creditor" Type="Self.creditor" Multiplicity="1" />
+          <End Role="dutie" Type="Self.dutie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="creditor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="dutie">
+              <PropertyRef Name="CreditorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="dutie_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="dutie" Type="Self.dutie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="dutie">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role__role">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="user_role">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role__user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="user_role">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bugetModelStoreContainer">
+          <EntitySet Name="creditor" EntityType="Self.creditor" Schema="buget" store:Type="Tables" />
+          <EntitySet Name="dutie" EntityType="Self.dutie" Schema="buget" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="buget" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="buget" store:Type="Tables" />
+          <EntitySet Name="user_role" EntityType="Self.user_role" Schema="buget" store:Type="Tables" />
+          <AssociationSet Name="dutie_creditor" Association="Self.dutie_creditor">
+            <End Role="creditor" EntitySet="creditor" />
+            <End Role="dutie" EntitySet="dutie" />
+          </AssociationSet>
+          <AssociationSet Name="dutie_user" Association="Self.dutie_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="dutie" EntitySet="dutie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role__role" Association="Self.FK_user_role__role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user_role" EntitySet="user_role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role__user" Association="Self.FK_user_role__user">
+            <End Role="user" EntitySet="user" />
+            <End Role="user_role" EntitySet="user_role" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bugetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Duties" Relationship="bugetModel.dutie_user" FromRole="user" ToRole="dutie" />
+          <NavigationProperty Name="Roles" Relationship="bugetModel.user_role" FromRole="User" ToRole="role" />
+        </EntityType>
+        <EntityContainer Name="BugetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="bugetModel.User" />
+          <EntitySet Name="Creditors" EntityType="bugetModel.Creditor" />
+          <EntitySet Name="Duties" EntityType="bugetModel.Dutie" />
+          <AssociationSet Name="dutie_creditor" Association="bugetModel.dutie_creditor">
+            <End Role="creditor" EntitySet="Creditors" />
+            <End Role="dutie" EntitySet="Duties" />
+          </AssociationSet>
+          <AssociationSet Name="dutie_user" Association="bugetModel.dutie_user">
+            <End Role="user" EntitySet="Users" />
+            <End Role="dutie" EntitySet="Duties" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="bugetModel.Role" />
+          <AssociationSet Name="user_role" Association="bugetModel.user_role">
+            <End Role="role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Creditor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Duties" Relationship="bugetModel.dutie_creditor" FromRole="creditor" ToRole="dutie" />
+        </EntityType>
+        <EntityType Name="Dutie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Creditor" Relationship="bugetModel.dutie_creditor" FromRole="dutie" ToRole="creditor" />
+          <NavigationProperty Name="User" Relationship="bugetModel.dutie_user" FromRole="dutie" ToRole="user" />
+        </EntityType>
+        <Association Name="dutie_creditor">
+          <End Type="bugetModel.Creditor" Role="creditor" Multiplicity="1" />
+          <End Type="bugetModel.Dutie" Role="dutie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="creditor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="dutie">
+              <PropertyRef Name="CreditorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="dutie_user">
+          <End Type="bugetModel.User" Role="user" Multiplicity="1" />
+          <End Type="bugetModel.Dutie" Role="dutie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="dutie">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="bugetModel.user_role" FromRole="role" ToRole="User" />
+        </EntityType>
+        <Association Name="user_role">
+          <End Type="bugetModel.Role" Role="role" Multiplicity="*" />
+          <End Type="bugetModel.User" Role="User" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bugetModelStoreContainer" CdmEntityContainer="BugetEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="bugetModel.User">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Creditors">
+            <EntityTypeMapping TypeName="bugetModel.Creditor">
+              <MappingFragment StoreEntitySet="creditor">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Duties">
+            <EntityTypeMapping TypeName="bugetModel.Dutie">
+              <MappingFragment StoreEntitySet="dutie">
+                <ScalarProperty Name="CreditorId" ColumnName="CreditorId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="bugetModel.Role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="user_role" TypeName="bugetModel.user_role" StoreEntitySet="user_role">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
